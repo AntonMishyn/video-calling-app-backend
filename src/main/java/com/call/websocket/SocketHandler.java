@@ -1,5 +1,6 @@
-package main.java.com.call.websocket;
+package com.call.websocket;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
@@ -10,6 +11,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+@Slf4j
 @Component
 public class SocketHandler extends TextWebSocketHandler {
 
@@ -17,11 +19,13 @@ public class SocketHandler extends TextWebSocketHandler {
 
     @Override
     public void afterConnectionEstablished(WebSocketSession session) {
+        log.info("Socket session added: {}", session.getId());
         sessions.add(session);
     }
 
     @Override
     public void afterConnectionClosed(WebSocketSession session, CloseStatus status) {
+        log.info("Socket session connection closed: {}, status: {}", session.getId(), status);
         sessions.remove(session);
     }
 
